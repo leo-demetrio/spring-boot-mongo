@@ -1,6 +1,7 @@
 package com.leodev.springmongo.services;
 
 import com.leodev.springmongo.domain.User;
+import com.leodev.springmongo.dto.UserDTO;
 import com.leodev.springmongo.exception.ObjectNotFoundException;
 import com.leodev.springmongo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,12 @@ public class UserService {
         return this.userRepository.findAll();
     }
     public User findById(String id){
-        User user = userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Object not found"));
-        return user;
+        return userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Object not found"));
+    }
+    public User insert(User user){
+        return userRepository.insert(user);
+    }
+    public User fromDTO(UserDTO userDTO){
+        return new User(userDTO.getId(),userDTO.getName(),userDTO.getEmail());
     }
 }

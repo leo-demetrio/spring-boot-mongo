@@ -5,12 +5,12 @@ import com.leodev.springmongo.dto.UserDTO;
 import com.leodev.springmongo.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
+import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,5 +33,12 @@ public class UserResource {
         User user = userService.findById(id);
         UserDTO userDTO = new UserDTO(user);
         return ResponseEntity.ok().body(userDTO);
+    }
+    @PostMapping
+    public ResponseEntity<Void> insert(@RequestBody UserDTO userDTO){
+        User user = userService.fromDTO(userDTO);
+        user = userService.insert(user);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 }
