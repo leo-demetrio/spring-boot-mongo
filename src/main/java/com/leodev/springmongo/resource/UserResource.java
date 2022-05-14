@@ -16,7 +16,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Log4j2
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/users")
@@ -59,8 +59,6 @@ public class UserResource {
     @GetMapping(value = "/{id}/posts")
     public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
         User user = userService.findById(id);
-        log.info(user);
-        log.info(user.getPosts());
         return ResponseEntity.ok().body(user.getPosts());
     }
 }
