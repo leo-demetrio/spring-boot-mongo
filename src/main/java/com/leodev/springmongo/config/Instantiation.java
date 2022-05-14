@@ -2,6 +2,7 @@ package com.leodev.springmongo.config;
 
 import com.leodev.springmongo.domain.Post;
 import com.leodev.springmongo.domain.User;
+import com.leodev.springmongo.dto.AuthorDTO;
 import com.leodev.springmongo.repository.PostRepository;
 import com.leodev.springmongo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,13 +31,10 @@ public class Instantiation implements CommandLineRunner {
         User maria = new User(null, "Maria Brown", "maria@gmail.com");
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
-
-        Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu Viagem", "Partiu viagem abraços",maria);
-        Post post2 = new Post(null, sdf.parse("21/04/2018"), "Partiu Noronha", "Partiu Noronha abraços",alex);
-        Post post3 = new Post(null, sdf.parse("21/05/2018"), "Partiu Búzios", "Partiu Búzios abraços", bob);
-
-
         userRepository.saveAll(Arrays.asList(maria,alex,bob));
+        Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu Viagem", "Partiu viagem abraços",new AuthorDTO(maria));
+        Post post2 = new Post(null, sdf.parse("21/04/2018"), "Partiu Noronha", "Partiu Noronha abraços",new AuthorDTO(alex));
+        Post post3 = new Post(null, sdf.parse("21/05/2018"), "Partiu Búzios", "Partiu Búzios abraços", new AuthorDTO(bob));
         postRepository.saveAll(Arrays.asList(post1,post2,post3));
     }
 }
