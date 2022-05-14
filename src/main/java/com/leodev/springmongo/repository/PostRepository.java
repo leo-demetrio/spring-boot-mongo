@@ -1,10 +1,12 @@
 package com.leodev.springmongo.repository;
 
 import com.leodev.springmongo.domain.Post;
-import com.leodev.springmongo.domain.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface PostRepository extends MongoRepository<Post, String> {
+    List<Post> findByTitleContainingIgnoreCase(String text);
 }
